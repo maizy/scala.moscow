@@ -5,41 +5,45 @@ package moscow.scala.sitegen
  * See LICENSE.txt for details.
  */
 
-import scala.io.Source
-import com.gilt.handlebars.scala.binding.dynamic._
-import com.gilt.handlebars.scala.Handlebars
+import com.github.jknack.handlebars.context.MethodValueResolver
+import com.github.jknack.handlebars.{ Handlebars, Context }
+import com.github.jknack.handlebars.io.{ ClassPathTemplateLoader, TemplateLoader }
+import moscow.scala.sitegen.utils.template.JValueResolver
 
-import moscow.scala.sitegen.utils.IO.getResourceAsFile
+import org.json4s.native.JsonMethods
+import org.json4s.JsonDSL._
 
 object SiteGeneratorApp extends App {
 
   println("Try handlebars template")
 
-  object TestData {
-    val name = "Alan"
-    val hometown = "Somewhere, TX"
-    val copyright = Map(
-      "year" -> 2015
+  val testData =
+    ("name" -> "Nikita") ~
+    ("hometown" -> "Moscow") ~
+    ("copyright" ->
+      ("year" -> "2015") ~
+      ("some" -> "2014")
+    ) ~
+    ("children" ->
+      Seq(
+        ("name" -> "Matthew") ~ ("age" -> 5),
+        ("name" -> "Veronika") ~ ("age" -> 1)
+      )
     )
-    val kids = Seq(Map(
-      "name" -> "Jimmy",
-      "age" -> "12"
-    ), Map(
-      "name" -> "Sally",
-      "age" -> "4"
-    ))
-  }
 
-  println("SAMPLE 1")
-  getResourceAsFile(getClass, "/templates/main.handlebars") foreach { template =>
-    val templateProcessor = Handlebars(template)
-    println(templateProcessor(TestData))
-  }
+  println(s"TestData = $testData")
+  println("CONTEXT: " + JsonMethods.pretty(JsonMethods.render(testData)))
 
-  println("SAMPLE 2")
-  getResourceAsFile(getClass, "/templates/main2.handlebars") foreach { template =>
-    val templateProcessor = Handlebars(template)
-    println(templateProcessor(TestData))
-  }
-
+  val loader: TemplateLoader = new ClassPathTemplateLoader()
+  loader.setPrefix("/templates")
+  loader.setSuffix(".handlebars")
+  val templateProcessor = new Handlebars(loader)
+  val context = Context.newBuilder(testData)
+    .resolver(
+      JValueResolver.INSTANCE,
+      MethodValueResolver.INSTANCE
+    )
+    .build
+  val template = templateProcessor.compile("with-partial")
+  println(template.apply(context))
 }
