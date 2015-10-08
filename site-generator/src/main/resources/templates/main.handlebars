@@ -1,10 +1,5 @@
-Hello, my name is {{name}}.
-I am from {{hometown}}.
-I have {{children.size}} kids:
+{{# partial "content" }}
+<p>Hello world!</p>
+{{/partial}}
 
-{{#each children}}
-    * {{name}} is {{age}}
-{{/each}}
-
----
-{{> partials/year copyright }}
+{{> layout/base pages.main }}

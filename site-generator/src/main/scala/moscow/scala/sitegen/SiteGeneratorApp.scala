@@ -17,33 +17,31 @@ object SiteGeneratorApp extends App {
 
   println("Try handlebars template")
 
-  val testData =
-    ("name" -> "Nikita") ~
-    ("hometown" -> "Moscow") ~
+  val data =
     ("copyright" ->
-      ("year" -> "2015") ~
-      ("some" -> "2014")
+      ("year" -> "2015")
     ) ~
-    ("children" ->
-      Seq(
-        ("name" -> "Matthew") ~ ("age" -> 5),
-        ("name" -> "Veronika") ~ ("age" -> 1)
+    ("pages" ->
+      ("main" ->
+        ("id" -> "main") ~
+        ("title" -> "scala.moscow")
+      ) ~
+      ("about" ->
+        ("id" -> "about") ~
+        ("title" -> "scala.moscow :: о проекте")
       )
     )
-
-  println(s"TestData = $testData")
-  println("CONTEXT: " + JsonMethods.pretty(JsonMethods.render(testData)))
 
   val loader: TemplateLoader = new ClassPathTemplateLoader()
   loader.setPrefix("/templates")
   loader.setSuffix(".handlebars")
   val templateProcessor = new Handlebars(loader)
-  val context = Context.newBuilder(testData)
+  val context = Context.newBuilder(data)
     .resolver(
       JValueResolver.INSTANCE,
       MethodValueResolver.INSTANCE
     )
     .build
-  val template = templateProcessor.compile("with-partial")
+  val template = templateProcessor.compile("main")
   println(template.apply(context))
 }
