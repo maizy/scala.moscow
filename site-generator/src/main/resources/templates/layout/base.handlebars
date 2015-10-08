@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="ru">
 <head>
-    <title>{{this.title}}</title>
+    <title>{{title}}</title>
     <meta charset="utf-8"/>
     {{#block "head" }}{{/block}}
 </head>
@@ -9,5 +9,7 @@
 <body>
 {{#block "content" }}{{/block}}
 {{#block "footer" }}{{/block}}
+
+<p>Copyright: (c) {{copyright.year}}</p>
 </body>
 </html>

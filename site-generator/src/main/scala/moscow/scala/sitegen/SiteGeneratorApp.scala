@@ -8,10 +8,8 @@ package moscow.scala.sitegen
 import com.github.jknack.handlebars.context.MethodValueResolver
 import com.github.jknack.handlebars.{ Handlebars, Context }
 import com.github.jknack.handlebars.io.{ ClassPathTemplateLoader, TemplateLoader }
-import moscow.scala.sitegen.utils.template.JValueResolver
-
-import org.json4s.native.JsonMethods
 import org.json4s.JsonDSL._
+import moscow.scala.sitegen.utils.template.JValueResolver
 
 object SiteGeneratorApp extends App {
 
@@ -21,10 +19,10 @@ object SiteGeneratorApp extends App {
     ("copyright" ->
       ("year" -> "2015")
     ) ~
+    ("title" -> "scala.moscow") ~  // default title
     ("pages" ->
       ("main" ->
-        ("id" -> "main") ~
-        ("title" -> "scala.moscow")
+        ("id" -> "main")
       ) ~
       ("about" ->
         ("id" -> "about") ~
@@ -42,6 +40,10 @@ object SiteGeneratorApp extends App {
       MethodValueResolver.INSTANCE
     )
     .build
-  val template = templateProcessor.compile("main")
-  println(template.apply(context))
+  val mainPage = templateProcessor.compile("main").apply(context)
+  
+  val aboutPage = templateProcessor.compile("about").apply(context)
+
+  println(mainPage)
+  println(aboutPage)
 }
