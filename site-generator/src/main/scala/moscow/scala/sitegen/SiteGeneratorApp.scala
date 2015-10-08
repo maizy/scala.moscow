@@ -40,10 +40,9 @@ object SiteGeneratorApp extends App {
       MethodValueResolver.INSTANCE
     )
     .build
-  val mainPage = templateProcessor.compile("main").apply(context)
-  
-  val aboutPage = templateProcessor.compile("about").apply(context)
 
+  val mainPage = templateProcessor.compile("main").apply(context)
+  val aboutPage = templateProcessor.compile("about").apply(context)
   println(mainPage)
   println(aboutPage)
 }

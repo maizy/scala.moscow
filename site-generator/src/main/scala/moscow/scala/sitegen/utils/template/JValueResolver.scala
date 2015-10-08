@@ -32,7 +32,7 @@ class JValueResolver extends ValueResolver {
   }
 
   private val primitiveValuesResolver: PartialFunction[JValue, AnyRef] = {
-    case JNothing | JNull => null
+    case JNothing | JNull => null  // scalastyle:ignore
     case JString(s) => s
     case JDouble(num) => Double.box(num)
     case JDecimal(num) => num

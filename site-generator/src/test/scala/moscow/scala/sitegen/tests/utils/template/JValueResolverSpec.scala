@@ -12,8 +12,8 @@ import org.json4s.JsonDSL._
 import moscow.scala.sitegen.utils.template.JValueResolver
 import moscow.scala.sitegen.tests.BaseSpec
 
-// based on
-// https://github.com/mfirry/handlebars-json4s/blob/master/src/test/scala/com/github/mfirry/handlebars/json4s/JValueResolverTest.scala
+// based on test from
+// https://github.com/mfirry/handlebars-json4s/
 class JValueResolverSpec extends BaseSpec {
 
   val primitiveTypes =
@@ -44,8 +44,8 @@ class JValueResolverSpec extends BaseSpec {
 
   it should "resolve json list by index" in {
     val json =
-        ("myList" -> Seq("a", "b", "c")) ~
-        ("first" -> "1st-level")
+      ("myList" -> Seq("a", "b", "c")) ~
+      ("first" -> "1st-level")
     val templateProcessor = new Handlebars()
     val context = Context.newBuilder(json).resolver(JValueResolver.INSTANCE).build
 
