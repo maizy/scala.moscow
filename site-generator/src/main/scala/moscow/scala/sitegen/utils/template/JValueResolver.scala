@@ -6,12 +6,11 @@ package moscow.scala.sitegen.utils.template
 import java.util.Map.Entry
 import java.util.{ Set => JSet }
 import java.util.AbstractMap.SimpleImmutableEntry
-import moscow.scala.sitegen.utils.StringUtils.toIntOpt
-
 import scala.collection.JavaConversions._
 import com.github.jknack.handlebars.ValueResolver
 import org.json4s.{ JValue, JArray, JString, JNothing, JNull, JDecimal, JDouble, JBool }
 import org.json4s.{ JInt, JLong, JObject }
+import moscow.scala.sitegen.utils.StringUtils.toIntOpt
 
 class JValueResolver extends ValueResolver {
 
