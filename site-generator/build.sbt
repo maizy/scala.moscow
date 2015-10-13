@@ -7,6 +7,8 @@ git.baseVersion := "0.0.1"
 
 scalaVersion := "2.11.7"
 libraryDependencies ++= Seq(
+  "ch.qos.logback" % "logback-classic" % "1.1.3",
+  "com.typesafe.scala-logging" %% "scala-logging" % "3.1.0",
   "com.github.jknack" % "handlebars" % "2.2.2",
   "org.json4s" %% "json4s-native" % "3.3.0",
   "com.github.scopt" %% "scopt" % "3.3.0",

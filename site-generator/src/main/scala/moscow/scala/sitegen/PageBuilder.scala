@@ -9,6 +9,7 @@ import java.nio.file.Path
 import com.github.jknack.handlebars.context.MethodValueResolver
 import com.github.jknack.handlebars.{ Handlebars, Context }
 import com.github.jknack.handlebars.io.{ ClassPathTemplateLoader, TemplateLoader }
+import com.typesafe.scalalogging.LazyLogging
 import org.json4s.JsonAST.{ JNothing, JValue }
 import moscow.scala.sitegen.utils.template.JValueResolver
 
@@ -17,6 +18,7 @@ class PageBuilder(
     val pageCode: String,
     val templateName: String,
     val storage: Storage)
+  extends LazyLogging
 {
 
   private var _context: JValue = JNothing
@@ -33,10 +35,12 @@ class PageBuilder(
     this
   }
 
+  // TODO
   def loadContextFromResource(relPath: Path): PageBuilder = ???
 
   def saveAs(relPath: Path): Unit = {
     assert(!relPath.isAbsolute)
+    logger.info(s"Render page $pageCode with template $templateName")
     val content = render()
     storage.createFile(content, relPath)
   }
