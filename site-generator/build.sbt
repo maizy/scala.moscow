@@ -3,7 +3,7 @@ enablePlugins(JavaAppPackaging)
 
 name := "scala-moscow-sitegen"
 organization := "scala.moscow"
-git.baseVersion := "0.0.1"
+git.baseVersion := "0.1.0"
 
 scalaVersion := "2.11.7"
 libraryDependencies ++= Seq(

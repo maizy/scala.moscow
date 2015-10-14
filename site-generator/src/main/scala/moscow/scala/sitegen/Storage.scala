@@ -11,7 +11,7 @@ import scala.util.Try
 import com.typesafe.scalalogging.LazyLogging
 import moscow.scala.sitegen.utils.IOUtils.writeToPath
 
-class StorageException(message: String, cause: Throwable = null) extends Exception(message, cause)
+class StorageException(message: String, cause: Throwable = null) extends Exception(message, cause)  // scalastyle:ignore
 
 
 class Storage(val basePath: Path) extends LazyLogging {
@@ -45,7 +45,7 @@ class Storage(val basePath: Path) extends LazyLogging {
       logger.info(s"Write ${content.length} bytes to $relPath")
       w.write(content)
     } recover {
-      case e =>  throw new StorageException(s"Unable to write file $relPath to storage", e)
+      case e: Throwable =>  throw new StorageException(s"Unable to write file $relPath to storage", e)
     }
   }
 
@@ -78,7 +78,7 @@ class Storage(val basePath: Path) extends LazyLogging {
   @throws(classOf[StorageException])
   private def wrapException(msg: String)(f: => Unit): Unit = {
     Try(f) recover {
-      case e => throw new StorageException(msg, e)
+      case e: Throwable => throw new StorageException(msg, e)
     }
   }
 }
