@@ -66,6 +66,7 @@ object ScalaMoscowSiteGeneratorApp extends App {
     ("copyright" ->
       ("year" -> "2015")
     ) ~
+    ("assets" -> ("path" -> "/assets")) ~
     ("title" -> "scala.moscow") ~  // default title
     ("pages" ->
       ("main" ->
