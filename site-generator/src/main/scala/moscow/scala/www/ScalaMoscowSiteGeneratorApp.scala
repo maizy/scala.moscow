@@ -7,7 +7,7 @@ package moscow.scala.www
 
 import java.nio.file.{Path, Paths}
 import com.typesafe.scalalogging.Logger
-import moscow.scala.sitegen.{PageBuilder, Storage, StorageException}
+import moscow.scala.sitegen.{ AssetsCollector, StorageException, AssetsCollectorException, PageBuilder, Storage }
 import org.json4s.JsonDSL._
 import org.slf4j.LoggerFactory
 
@@ -78,7 +78,7 @@ object ScalaMoscowSiteGeneratorApp extends App {
     )
 
   try {
-    logger.debug(s"Base output path ${ opts.basePath }")
+    logger.debug(s"Base output path ${opts.basePath}")
     val storage = Storage(opts.basePath)
 
     logger.info("create pages")
@@ -89,9 +89,17 @@ object ScalaMoscowSiteGeneratorApp extends App {
     PageBuilder("about", storage)
       .updateContext(data)
       .saveAs(Paths.get("about.html"))
+
+    AssetsCollector(storage)
+      .copyRecursiveFromResources("assets", Paths.get("assets"))
+
   } catch {
     case e: StorageException =>
-      logger.error("Unable to generate site. storage error", e)
+      logger.error("Unable to generate site. Storage error", e)
+      System.exit(SITEGEN_ERROR)
+
+    case e: AssetsCollectorException =>
+      logger.error("Unable to generate site. Assets collector error", e)
       System.exit(SITEGEN_ERROR)
   }
 

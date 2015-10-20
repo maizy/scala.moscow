@@ -3,13 +3,17 @@
 <head>
     <title>{{title}}</title>
     <meta charset="utf-8"/>
+    <link rel="stylesheet" href="{{assets.path}}/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="{{assets.path}}/css/main.css"/>
     {{#block "head" }}{{/block}}
 </head>
 
 <body>
-{{#block "content" }}{{/block}}
-{{#block "footer" }}{{/block}}
 
-<p>Copyright: (c) {{copyright.year}}</p>
+<div class="container">
+{{#block "content" }}{{/block}}
+</div>
+
+{{#block "footer" }}{{/block}}
 </body>
 </html>
