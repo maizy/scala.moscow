@@ -6,6 +6,8 @@ handlers:
 - url: (.*)/
   static_files: static\1/index.html
   upload: static/index.html
+  secure: always
 
 - url: /
   static_dir: static
+  secure: always
